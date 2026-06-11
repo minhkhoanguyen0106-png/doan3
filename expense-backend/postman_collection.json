@@ -1,0 +1,400 @@
+{
+  "info": {
+    "name": "Expense Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/users/register" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nguyen Van A\",\n  \"email\": \"test@gmail.com\",\n  \"password\": \"123456\",\n  \"phoneNumber\": \"0123456789\",\n  \"address\": \"Ha Noi\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/users/login" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@gmail.com\",\n  \"password\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/users" }
+          }
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/users/1" }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/users/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nguyen Van B\",\n  \"email\": \"test@gmail.com\",\n  \"phoneNumber\": \"0987654321\",\n  \"address\": \"Ho Chi Minh\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/users/1/change-password" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"123456\",\n  \"newPassword\": \"newpass123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/api/users/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/categories/user/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryName\": \"An uong\",\n  \"type\": \"EXPENSE\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Categories By User",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/categories/user/1" }
+          }
+        },
+        {
+          "name": "Get Category By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/categories/1" }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/categories/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryName\": \"Di lai\",\n  \"type\": \"EXPENSE\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/api/categories/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transaction",
+      "item": [
+        {
+          "name": "Create Transaction",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/transactions/user/1/category/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"An trua\",\n  \"amount\": 50000,\n  \"type\": \"EXPENSE\",\n  \"note\": \"Com van phong\",\n  \"transactionDate\": \"2025-06-10T12:00:00\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Transactions By User",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/transactions/user/1" }
+          }
+        },
+        {
+          "name": "Get Transaction By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/transactions/1" }
+          }
+        },
+        {
+          "name": "Update Transaction",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/transactions/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"An toi\",\n  \"amount\": 80000,\n  \"type\": \"EXPENSE\",\n  \"note\": \"An nha hang\",\n  \"transactionDate\": \"2025-06-10T19:00:00\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Transaction",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/api/transactions/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Saving Goal",
+      "item": [
+        {
+          "name": "Create Saving Goal",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/goals/user/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"goalName\": \"Mua laptop\",\n  \"targetAmount\": 20000000,\n  \"currentAmount\": 5000000,\n  \"deadline\": \"2025-12-31\",\n  \"status\": \"IN_PROGRESS\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Goals By User",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/goals/user/1" }
+          }
+        },
+        {
+          "name": "Get Goal By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/goals/1" }
+          }
+        },
+        {
+          "name": "Update Goal",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/goals/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"goalName\": \"Mua laptop\",\n  \"targetAmount\": 20000000,\n  \"currentAmount\": 10000000,\n  \"deadline\": \"2025-12-31\",\n  \"status\": \"IN_PROGRESS\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Goal",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/api/goals/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Budget",
+      "item": [
+        {
+          "name": "Create Budget",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/budgets/user/1/category/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limitAmount\": 2000000,\n  \"month\": 6,\n  \"year\": 2025\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Budgets By User",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/budgets/user/1" }
+          }
+        },
+        {
+          "name": "Get Budget By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/budgets/1" }
+          }
+        },
+        {
+          "name": "Update Budget",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/budgets/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limitAmount\": 3000000,\n  \"month\": 6,\n  \"year\": 2025\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Budget",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/api/budgets/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statistic",
+      "item": [
+        {
+          "name": "Get Summary",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/statistics/summary/user/1" }
+          }
+        },
+        {
+          "name": "Get Monthly Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/statistics/monthly/user/1?year=2025",
+              "query": [{ "key": "year", "value": "2025" }]
+            }
+          }
+        },
+        {
+          "name": "Get By Category",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/statistics/by-category/user/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notification",
+      "item": [
+        {
+          "name": "Create Notification",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/notifications/user/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Chi tieu qua muc\",\n  \"content\": \"Ban da chi tieu vuot han muc thang nay\",\n  \"isRead\": false,\n  \"createdAt\": \"2025-06-10T08:00:00\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Notifications By User",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/notifications/user/1" }
+          }
+        },
+        {
+          "name": "Get Notification By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/notifications/1" }
+          }
+        },
+        {
+          "name": "Update Notification",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/notifications/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Chi tieu qua muc\",\n  \"content\": \"Ban da chi tieu vuot han muc thang nay\",\n  \"isRead\": true,\n  \"createdAt\": \"2025-06-10T08:00:00\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Notification",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/api/notifications/1" }
+          }
+        }
+      ]
+    }
+  ,
+    {
+      "name": "AiHistory",
+      "item": [
+        {
+          "name": "Create AiHistory",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/ai-histories/user/1" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputText\": \"Phan tich chi tieu thang nay\",\n  \"result\": \"Ban da chi tieu qua nhieu vao an uong\",\n  \"createdAt\": \"2025-06-10\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get AiHistories By User",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/ai-histories/user/1" }
+          }
+        },
+        {
+          "name": "Get AiHistory By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/ai-histories/1" }
+          }
+        },
+        {
+          "name": "Delete AiHistory",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/api/ai-histories/1" }
+          }
+        }
+      ]
+    }
+  ]
+}

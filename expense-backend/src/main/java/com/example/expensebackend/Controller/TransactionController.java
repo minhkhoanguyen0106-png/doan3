@@ -2,46 +2,45 @@ package com.example.expensebackend.Controller;
 
 import com.example.expensebackend.Entity.Transaction;
 import com.example.expensebackend.Service.TransactionService;
+import com.example.expensebackend.dto.Request.TransactionRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // Bao cho Spring biet class nay la REST controller va tra ve JSON.
-@RequestMapping("/api/transactions") // Tat ca API giao dich bat dau bang /api/transactions.
+@RestController
+@RequestMapping("/api/transactions")
 public class TransactionController {
-    private final TransactionService transactionService; // Service xu ly logic lien quan giao dich.
+    private final TransactionService transactionService;
 
-    // Constructor injection: Spring tu truyen TransactionService vao controller.
     public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService; // Luu service vao field de cac API ben duoi su dung.
+        this.transactionService = transactionService;
     }
 
-    @PostMapping("/user/{email}/category/{categoryId}") // Tao giao dich cho user va danh muc cu the.
+    @PostMapping("/user/{email}")
     public Transaction createTransaction(
-            @PathVariable String email, // Lay email user tu URL.
-            @PathVariable Long categoryId, // Lay id danh muc tu URL.
-            @RequestBody Transaction transaction // Lay JSON body va map thanh Transaction.
+            @PathVariable String email,
+            @RequestBody TransactionRequest request
     ) {
-        return transactionService.createTransaction(email, categoryId, transaction); // Goi service de gan user/category va luu.
+        return transactionService.createTransaction(email, request);
     }
 
-    @GetMapping("/user/{email}") // Lay danh sach giao dich cua user theo email.
+    @GetMapping("/user/{email}")
     public List<Transaction> getTransactionsByEmail(@PathVariable String email) {
-        return transactionService.getTransactionsByEmail(email); // Goi service tim user roi lay giao dich cua user do.
+        return transactionService.getTransactionsByEmail(email);
     }
 
-    @GetMapping("/{id}") // Lay chi tiet giao dich theo id.
+    @GetMapping("/{id}")
     public Transaction getTransactionById(@PathVariable Long id) {
-        return transactionService.getTransactionById(id); // Goi service tim giao dich theo khoa chinh id.
+        return transactionService.getTransactionById(id);
     }
 
-    @PutMapping("/{id}") // Cap nhat giao dich theo id.
+    @PutMapping("/{id}")
     public Transaction updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
-        return transactionService.updateTransaction(id, transaction); // Goi service cap nhat cac field duoc phep sua.
+        return transactionService.updateTransaction(id, transaction);
     }
 
-    @DeleteMapping("/{id}") // Xoa giao dich theo id.
+    @DeleteMapping("/{id}")
     public void deleteTransaction(@PathVariable Long id) {
-        transactionService.deleteTransaction(id); // Goi service xoa giao dich trong database.
+        transactionService.deleteTransaction(id);
     }
 }

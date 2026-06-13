@@ -1,13 +1,13 @@
-package com.example.expensebackend.dto.Reponse;
+package com.example.expensebackend.dto.Response;
 
-public class LoginReponse { // DTO tra ve sau khi login thanh cong.
+public class LoginResponse { // DTO tra ve sau khi login thanh cong.
     private String name; // Ten user tra ve cho client.
     private String email; // Email user tra ve cho client.
     private String phoneNumber; // So dien thoai tra ve cho client.
     private String address; // Dia chi tra ve cho client.
 
     // Constructor tao response tu thong tin user.
-    public LoginReponse(String name, String email, String phoneNumber, String address) {
+    public LoginResponse(String name, String email, String phoneNumber, String address) {
         this.name = name; // Gan name vao response.
         this.email = email; // Gan email vao response.
         this.phoneNumber = phoneNumber; // Gan phoneNumber vao response.

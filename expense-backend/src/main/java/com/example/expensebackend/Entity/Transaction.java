@@ -1,5 +1,6 @@
 package com.example.expensebackend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Database tu tang id khi insert.
     private Long id; // Id duy nhat cua giao dich.
 
+    @JsonIgnore
     @ManyToOne // Nhieu giao dich co the thuoc ve mot user.
     @JoinColumn(name = "user_id") // Cot user_id trong bang transactions lien ket sang bang users.
     private User user; // User so huu giao dich nay.
@@ -65,4 +67,5 @@ public class Transaction {
     public String getNote() { return note; } // Getter lay ghi chu.
 
     public LocalDateTime getTransactionDate() { return transactionDate; } // Getter lay ngay giao dich.
+
 }

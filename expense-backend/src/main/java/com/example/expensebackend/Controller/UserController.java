@@ -2,8 +2,8 @@ package com.example.expensebackend.Controller;
 
 import com.example.expensebackend.Entity.User;
 import com.example.expensebackend.Service.UserService;
-import com.example.expensebackend.dto.Reponse.LoginReponse;
-import com.example.expensebackend.dto.Reponse.RegisterReponse;
+import com.example.expensebackend.dto.Response.LoginResponse;
+import com.example.expensebackend.dto.Response.RegisterResponse;
 import com.example.expensebackend.dto.Request.ChangePasswordRequest;
 import com.example.expensebackend.dto.Request.LoginRequest;
 import com.example.expensebackend.dto.Request.RegisterRequest;
@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/register") // API dang ky user moi: POST /api/users/register.
-    public RegisterReponse register(@RequestBody RegisterRequest request) {
+    public RegisterResponse register(@RequestBody RegisterRequest request) {
         // @RequestBody lay JSON tu client va chuyen thanh RegisterRequest.
         return userService.register(request); // Dua request qua service de tao user va tra response.
     }
@@ -33,7 +33,7 @@ public class UserController {
         // Goi service de kiem tra email va password.
         return userService.login(request.getEmail(), request.getPassword())
                 // Neu login dung, tao LoginReponse de tra ve thong tin user can thiet.
-                .map(u -> ResponseEntity.ok(new LoginReponse(
+                .map(u -> ResponseEntity.ok(new LoginResponse(
                     u.getName(), u.getEmail(), // Lay ten va email tu user trong database.
                     u.getPhoneNumber(), u.getAddress() // Lay so dien thoai va dia chi.
                 )))

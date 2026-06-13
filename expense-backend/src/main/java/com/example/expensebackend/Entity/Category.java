@@ -1,5 +1,6 @@
 package com.example.expensebackend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity // Bao cho JPA biet Category la mot entity.
@@ -9,6 +10,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Database tu tang id khi tao category.
     private Long id; // Id duy nhat cua danh muc.
 
+    @JsonIgnore
     @ManyToOne // Nhieu category co the thuoc ve mot user.
     @JoinColumn(name = "user_id") // Cot user_id lien ket sang bang users.
     private User user; // User so huu danh muc nay.

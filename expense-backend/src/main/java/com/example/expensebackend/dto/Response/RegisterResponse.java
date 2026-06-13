@@ -1,13 +1,13 @@
-package com.example.expensebackend.dto.Reponse;
+package com.example.expensebackend.dto.Response;
 
-public class RegisterReponse { // DTO tra ve sau khi dang ky thanh cong.
+public class RegisterResponse { // DTO tra ve sau khi dang ky thanh cong.
     private String name; // Ten user tra ve cho client.
     private String email; // Email user tra ve cho client.
     private String phoneNumber; // So dien thoai tra ve cho client.
     private String address; // Dia chi tra ve cho client.
 
     // Constructor co tham so dung khi muon tao response nhanh voi day du field.
-    public RegisterReponse(String name, String email, String phoneNumber, String address) {
+    public RegisterResponse(String name, String email, String phoneNumber, String address) {
         this.name = name; // Gan name vao response.
         this.email = email; // Gan email vao response.
         this.phoneNumber = phoneNumber; // Gan phoneNumber vao response.
@@ -27,5 +27,5 @@ public class RegisterReponse { // DTO tra ve sau khi dang ky thanh cong.
 
     public void setAddress(String address) { this.address = address; } // Setter gan address.
 
-    public RegisterReponse() {} // Constructor rong can cho viec tao object roi set tung field.
+    public RegisterResponse() {} // Constructor rong can cho viec tao object roi set tung field.
 }

@@ -5,7 +5,7 @@ import com.example.expensebackend.Entity.CategoryType;
 import com.example.expensebackend.Entity.User;
 import com.example.expensebackend.Repository.CategoryRepository;
 import com.example.expensebackend.Repository.UserRepository;
-import com.example.expensebackend.dto.Reponse.RegisterReponse;
+import com.example.expensebackend.dto.Response.RegisterResponse;
 import com.example.expensebackend.dto.Request.ChangePasswordRequest;
 import com.example.expensebackend.dto.Request.RegisterRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +27,7 @@ public class UserService {
     }
 
     // Ham dang ky user moi.
-    public RegisterReponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
         // Kiem tra email da ton tai chua de tranh trung tai khoan.
         if (userRepository.findByEmail(request.getEmail()).isPresent())
             throw new RuntimeException("Email already exists"); // Neu email da co thi bao loi.
@@ -43,11 +43,11 @@ public class UserService {
         user.setPhoneNumber(request.getPhoneNumber()); // Lay so dien thoai tu request.
 
         User savedUser = userRepository.save(user); // Luu user vao database va nhan lai user da co id.
-        RegisterReponse reponse = new RegisterReponse(); // Tao DTO response de tra ve cho client.
-        reponse.setName(savedUser.getName()); // Tra ve ten user.
-        reponse.setEmail(savedUser.getEmail()); // Tra ve email user.
-        reponse.setPhoneNumber(savedUser.getPhoneNumber()); // Tra ve so dien thoai.
-        reponse.setAddress(savedUser.getAddress()); // Tra ve dia chi.
+        RegisterResponse response = new RegisterResponse(); // Tao DTO response de tra ve cho client.
+        response.setName(savedUser.getName()); // Tra ve ten user.
+        response.setEmail(savedUser.getEmail()); // Tra ve email user.
+        response.setPhoneNumber(savedUser.getPhoneNumber()); // Tra ve so dien thoai.
+        response.setAddress(savedUser.getAddress()); // Tra ve dia chi.
 
         // Khi dang ky xong thi tao san cac danh muc chi tieu co ban cho user.
         List<String> defaultCategories = List.of(
@@ -63,7 +63,7 @@ public class UserService {
             categoryRepository.save(cat); // Luu danh muc vao database.
         }
 
-        return reponse; // Tra response dang ky ve controller.
+        return response; // Tra response dang ky ve controller.
     }
 
     // Ham doi mat khau: tim user bang email, kiem tra mat khau cu, roi luu mat khau moi.

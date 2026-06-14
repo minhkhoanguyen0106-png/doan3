@@ -2,6 +2,8 @@ package com.example.expensebackend.Controller;
 
 import com.example.expensebackend.Entity.AiHistory;
 import com.example.expensebackend.Service.AiHistoryService;
+import com.example.expensebackend.dto.Request.AiHistoryRequest;
+import com.example.expensebackend.dto.Response.AiHistoryResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +19,17 @@ public class AiHistoryController {
     }
 
     @PostMapping("/user/{email}") // Tao mot ban ghi lich su AI cho user.
-    public AiHistory createAiHistory(@PathVariable String email, @RequestBody AiHistory aiHistory) {
-        return aiHistoryService.createAiHistory(email, aiHistory); // Goi service gan user va luu lich su.
+    public AiHistoryResponse createAiHistory(@PathVariable String email, @RequestBody AiHistoryRequest request) {
+        return aiHistoryService.createAiHistory(email, request); // Goi service gan user va luu lich su.
     }
 
     @GetMapping("/user/{email}") // Lay lich su AI cua user theo email.
-    public List<AiHistory> getAiHistoriesByEmail(@PathVariable String email) {
+    public List<AiHistoryResponse> getAiHistoriesByEmail(@PathVariable String email) {
         return aiHistoryService.getAiHistoriesByEmail(email); // Goi service lay lich su theo user.
     }
 
     @GetMapping("/{id}") // Lay chi tiet mot lich su AI theo id.
-    public AiHistory getAiHistoryById(@PathVariable Long id) {
+    public AiHistoryResponse getAiHistoryById(@PathVariable Long id) {
         return aiHistoryService.getAiHistoryById(id); // Goi service tim lich su theo id.
     }
 

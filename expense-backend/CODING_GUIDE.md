@@ -1417,7 +1417,6 @@ import com.example.expensebackend.Entity.SavingGoal;
 import com.example.expensebackend.Entity.User;
 import com.example.expensebackend.Repository.SavingGoalRepository;
 import com.example.expensebackend.Repository.UserRepository;
-import com.example.expensebackend.dto.Request.SavingGoalRequest;
 import com.example.expensebackend.dto.Response.SavingGoalResponse;
 import org.springframework.stereotype.Service;
 
@@ -1530,7 +1529,6 @@ public class SavingGoalService {
 package com.example.expensebackend.Controller;
 
 import com.example.expensebackend.Service.SavingGoalService;
-import com.example.expensebackend.dto.Request.SavingGoalRequest;
 import com.example.expensebackend.dto.Response.SavingGoalResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

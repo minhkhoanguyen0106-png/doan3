@@ -2,6 +2,8 @@ package com.example.expensebackend.Controller;
 
 import com.example.expensebackend.Entity.Notification;
 import com.example.expensebackend.Service.NotificationService;
+import com.example.expensebackend.dto.Request.NotificationRequest;
+import com.example.expensebackend.dto.Response.NotificationResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,23 +19,23 @@ public class NotificationController {
     }
 
     @PostMapping("/user/{email}") // Tao thong bao cho user theo email.
-    public Notification createNotification(@PathVariable String email, @RequestBody Notification notification) {
-        return notificationService.createNotification(email, notification); // Goi service gan user va luu notification.
+    public NotificationResponse createNotification(@PathVariable String email, @RequestBody NotificationRequest request) {
+        return notificationService.createNotification(email, request); // Goi service gan user va luu notification.
     }
 
     @GetMapping("/user/{email}") // Lay danh sach thong bao cua user.
-    public List<Notification> getNotificationsByEmail(@PathVariable String email) {
+    public List<NotificationResponse> getNotificationsByEmail(@PathVariable String email) {
         return notificationService.getNotificationsByEmail(email); // Goi service lay notification theo user.
     }
 
     @GetMapping("/{id}") // Lay chi tiet thong bao theo id.
-    public Notification getNotificationById(@PathVariable Long id) {
+    public NotificationResponse getNotificationById(@PathVariable Long id) {
         return notificationService.getNotificationById(id); // Goi service tim notification theo id.
     }
 
     @PutMapping("/{id}") // Cap nhat thong bao theo id.
-    public Notification updateNotification(@PathVariable Long id, @RequestBody Notification notification) {
-        return notificationService.updateNotification(id, notification); // Goi service cap nhat title/content/read.
+    public NotificationResponse updateNotification(@PathVariable Long id, @RequestBody NotificationRequest request) {
+        return notificationService.updateNotification(id, request); // Goi service cap nhat title/content/read.
     }
 
     @DeleteMapping("/{id}") // Xoa thong bao theo id.

@@ -4,68 +4,88 @@ import com.example.expensebackend.Entity.SavingGoal;
 import com.example.expensebackend.Entity.User;
 import com.example.expensebackend.Repository.SavingGoalRepository;
 import com.example.expensebackend.Repository.UserRepository;
+import com.example.expensebackend.dto.Request.SavingGoalRequest;
+import com.example.expensebackend.dto.Response.SavingGoalResponse;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service // Bao cho Spring biet day la service xu ly muc tieu tiet kiem.
+@Service
 public class SavingGoalService {
-    private final SavingGoalRepository savingGoalRepository; // Repository thao tac bang saving_goals.
-    private final UserRepository userRepository; // Repository dung de tim user.
+    private final SavingGoalRepository savingGoalRepository;
+    private final UserRepository userRepository;
 
-    // Constructor injection: Spring truyen repository vao service.
     public SavingGoalService(SavingGoalRepository savingGoalRepository, UserRepository userRepository) {
-        this.savingGoalRepository = savingGoalRepository; // Luu SavingGoalRepository vao field.
-        this.userRepository = userRepository; // Luu UserRepository vao field.
+        this.savingGoalRepository = savingGoalRepository;
+        this.userRepository = userRepository;
     }
 
-    // Tao muc tieu tiet kiem moi cho user.
-    public SavingGoal createSavingGoal(String email, SavingGoal savingGoal) {
-        User user = userRepository.findByEmail(email) // Tim user theo email.
-                .orElseThrow(() -> new RuntimeException("User not found")); // Khong thay user thi bao loi.
-        savingGoal.setUser(user); // Gan goal thuoc ve user nay.
-        return savingGoalRepository.save(savingGoal); // Luu goal vao database.
+    public SavingGoalResponse createSavingGoal(String email, SavingGoalRequest request) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        SavingGoal savingGoal = new SavingGoal();
+        savingGoal.setUser(user);
+        savingGoal.setGoalName(request.getGoalName());
+        savingGoal.setTargetAmount(request.getTargetAmount());
+        savingGoal.setCurrentAmount(request.getCurrentAmount());
+        savingGoal.setDeadline(request.getDeadline());
+        savingGoal.setStatus(request.getStatus());
+        return toResponse(savingGoalRepository.save(savingGoal));
     }
 
-    // Lay danh sach muc tieu tiet kiem cua user.
-    public List<SavingGoal> getSavingGoalsByEmail(String email) {
-        User user = userRepository.findByEmail(email) // Tim user theo email.
-                .orElseThrow(() -> new RuntimeException("User not found")); // Khong thay user thi bao loi.
-        return savingGoalRepository.findByUser(user); // Lay cac goal co user_id cua user nay.
+    public List<SavingGoalResponse> getSavingGoalsByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return savingGoalRepository.findByUser(user)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
-    // Lay mot muc tieu theo id.
-    public SavingGoal getSavingGoalById(Long id) {
-        return savingGoalRepository.findById(id) // Tim goal theo khoa chinh id.
-                .orElseThrow(() -> new RuntimeException("Saving goal not found")); // Khong thay thi bao loi.
+    public SavingGoalResponse getSavingGoalById(Long id) {
+        SavingGoal goal = savingGoalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Saving goal not found"));
+        return toResponse(goal);
     }
 
-    // Cap nhat muc tieu theo id.
-    public SavingGoal updateSavingGoal(Long id, SavingGoal newSavingGoal) {
-        SavingGoal savingGoal = savingGoalRepository.findById(id) // Lay goal cu trong database.
-                .orElseThrow(() -> new RuntimeException("Saving goal not found")); // Khong thay thi bao loi.
-        savingGoal.setGoalName(newSavingGoal.getGoalName()); // Cap nhat ten muc tieu.
-        savingGoal.setTargetAmount(newSavingGoal.getTargetAmount()); // Cap nhat so tien can dat.
-        savingGoal.setCurrentAmount(newSavingGoal.getCurrentAmount()); // Cap nhat so tien hien co.
-        savingGoal.setDeadline(newSavingGoal.getDeadline()); // Cap nhat han hoan thanh.
-        savingGoal.setStatus(newSavingGoal.getStatus()); // Cap nhat trang thai.
-        return savingGoalRepository.save(savingGoal); // Luu thay doi va tra goal moi.
+    public SavingGoalResponse updateSavingGoal(Long id, SavingGoalRequest request) {
+        SavingGoal savingGoal = savingGoalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Saving goal not found"));
+        savingGoal.setGoalName(request.getGoalName());
+        savingGoal.setTargetAmount(request.getTargetAmount());
+        savingGoal.setCurrentAmount(request.getCurrentAmount());
+        savingGoal.setDeadline(request.getDeadline());
+        savingGoal.setStatus(request.getStatus());
+        return toResponse(savingGoalRepository.save(savingGoal));
     }
 
-    // Xoa muc tieu theo id.
     public void deleteSavingGoal(Long id) {
-        savingGoalRepository.deleteById(id); // Goi JPA xoa row co id tuong ung.
+        savingGoalRepository.deleteById(id);
     }
 
-    // Tinh phan tram hoan thanh: currentAmount / targetAmount * 100.
     public double getProgress(Long id) {
-        SavingGoal goal = getSavingGoalById(id); // Tai goal can tinh tien do.
-        if (goal.getTargetAmount().compareTo(BigDecimal.ZERO) == 0) return 0; // Tranh chia cho 0.
-        return goal.getCurrentAmount() // Lay so tien hien tai.
-                .divide(goal.getTargetAmount(), 4, RoundingMode.HALF_UP) // Chia cho muc tieu va lam tron 4 chu so.
-                .multiply(BigDecimal.valueOf(100)) // Doi tu ti le sang phan tram.
-                .doubleValue(); // Chuyen BigDecimal sang double de tra ve JSON don gian.
+        SavingGoal goal = savingGoalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Saving goal not found"));
+        if (goal.getTargetAmount().compareTo(BigDecimal.ZERO) == 0) return 0;
+        return goal.getCurrentAmount()
+                .divide(goal.getTargetAmount(), 4, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(100))
+                .doubleValue();
+    }
+
+    private SavingGoalResponse toResponse(SavingGoal goal) {
+        double progress = getProgress(goal.getId());
+        return new SavingGoalResponse(
+                goal.getGoalName(),
+                goal.getUser().getName(),
+                goal.getTargetAmount(),
+                goal.getCurrentAmount(),
+                goal.getDeadline(),
+                goal.getStatus(),
+                progress
+        );
     }
 }

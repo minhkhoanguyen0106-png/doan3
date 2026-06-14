@@ -6,7 +6,10 @@ import com.example.expensebackend.Entity.User;
 import com.example.expensebackend.Repository.BudgetRepository;
 import com.example.expensebackend.Repository.CategoryRepository;
 import com.example.expensebackend.Repository.UserRepository;
+import com.example.expensebackend.dto.Request.BudgetRequest;
+import com.example.expensebackend.dto.Response.BudgetResponse;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -28,37 +31,66 @@ public class BudgetService {
     }
 
     // Tao ngan sach cho mot user va mot category.
-    public Budget createBudget(String email, Long categoryId, Budget budget) {
+    public BudgetResponse createBudget(String email, Long categoryId, BudgetRequest request) {
         User user = userRepository.findByEmail(email) // Tim user theo email.
                 .orElseThrow(() -> new RuntimeException("User not found")); // Khong thay user thi bao loi.
         Category category = categoryRepository.findById(categoryId) // Tim category theo id.
                 .orElseThrow(() -> new RuntimeException("Category not found")); // Khong thay category thi bao loi.
-        budget.setUser(user); // Gan budget thuoc ve user nay.
-        budget.setCategory(category); // Gan budget ap dung cho category nay.
-        return budgetRepository.save(budget); // Luu budget vao database.
+        Budget budget = new Budget();
+        budget.setUser(user);
+        budget.setCategory(category);
+        budget.setLimitAmount(request.getLimitAmount());
+        budget.setMonth(request.getMonth());
+        budget.setYear(request.getYear());
+
+        Budget savedBudget = budgetRepository.save(budget);
+        BudgetResponse response = new BudgetResponse();
+        response.setUserName(savedBudget.getUser().getName());
+        response.setCategoryName(savedBudget.getCategory().getCategoryName());
+        response.setLimitAmount(savedBudget.getLimitAmount());
+        response.setMonth(savedBudget.getMonth());
+        response.setYear(savedBudget.getYear());
+
+        return response;
+
     }
 
     // Lay danh sach budget cua user theo email.
-    public List<Budget> getBudgetsByEmail(String email) {
-        User user = userRepository.findByEmail(email) // Tim user theo email.
-                .orElseThrow(() -> new RuntimeException("User not found")); // Khong thay user thi bao loi.
-        return budgetRepository.findByUser(user); // Lay cac budget co user_id cua user nay.
+    public List<BudgetResponse> getBudgetsByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return budgetRepository.findByUser(user)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     // Lay budget theo id.
-    public Budget getBudgetById(Long id) {
-        return budgetRepository.findById(id) // Tim budget theo khoa chinh id.
-                .orElseThrow(() -> new RuntimeException("Budget not found")); // Khong thay thi bao loi.
+    public BudgetResponse getBudgetById(Long id) {
+        Budget budget = budgetRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Budget not found"));
+        return toResponse(budget);
+    }
+
+    private BudgetResponse toResponse(Budget b) {
+        return new BudgetResponse(
+                b.getUser().getName(),
+                b.getCategory().getCategoryName(),
+                b.getLimitAmount(),
+                b.getMonth(),
+                b.getYear()
+        );
     }
 
     // Cap nhat budget theo id.
-    public Budget updateBudget(Long id, Budget newBudget) {
+    public BudgetResponse updateBudget(Long id, BudgetRequest request) {
         Budget budget = budgetRepository.findById(id) // Lay budget cu trong database.
                 .orElseThrow(() -> new RuntimeException("Budget not found")); // Khong thay thi bao loi.
-        budget.setLimitAmount(newBudget.getLimitAmount()); // Cap nhat so tien gioi han.
-        budget.setMonth(newBudget.getMonth()); // Cap nhat thang ap dung.
-        budget.setYear(newBudget.getYear()); // Cap nhat nam ap dung.
-        return budgetRepository.save(budget); // Luu thay doi va tra budget moi.
+        budget.setLimitAmount(request.getLimitAmount());
+        budget.setMonth(request.getMonth());
+        budget.setYear(request.getYear());
+
+        return toResponse(budgetRepository.save(budget)); // Luu thay doi va tra budget moi.
     }
 
     // Xoa budget theo id.

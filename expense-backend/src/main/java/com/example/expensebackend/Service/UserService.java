@@ -8,10 +8,12 @@ import com.example.expensebackend.Repository.UserRepository;
 import com.example.expensebackend.dto.Response.RegisterResponse;
 import com.example.expensebackend.dto.Request.ChangePasswordRequest;
 import com.example.expensebackend.dto.Request.RegisterRequest;
+import com.example.expensebackend.dto.Response.UserResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service // Bao cho Spring biet day la class chua logic xu ly nghiep vu.
 public class UserService {
@@ -89,13 +91,26 @@ public class UserService {
     }
 
     // Lay tat ca user trong bang users.
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+        .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     // Tim user theo khoa chinh id.
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserResponse> getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(this::toResponse);
+    }
+
+    private UserResponse toResponse(User u){
+        return new UserResponse(
+                u.getName(),
+                u.getEmail(),
+                u.getAddress(),
+                u.getPhoneNumber()
+        );
     }
 
     // Cap nhat thong tin user theo id.
@@ -115,5 +130,19 @@ public class UserService {
     // Xoa user theo id.
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    // Phan ADMIN
+    public void lockUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("User not found"));
+        user.setStatus("LOCKED");
+        userRepository.save(user);
+    }
+    public void unlockUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setStatus("ACTIVE");
+        userRepository.save(user);
     }
 }

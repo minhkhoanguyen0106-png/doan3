@@ -521,18 +521,46 @@ public class RegisterRequest {
     private String address;
 
     // ===== GETTERS =====
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
-    public String getPhoneNumber() { return phoneNumber; }
-    public String getAddress() { return address; }
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 
     // ===== SETTERS =====
-    public void setName(String name) { this.name = name; }
-    public void setEmail(String email) { this.email = email; }
-    public void setPassword(String password) { this.password = password; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    public void setAddress(String address) { this.address = address; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
 ```
 
@@ -574,21 +602,50 @@ public class LoginResponse {
     }
 
     // Constructor không tham số (cần cho Jackson)
-    public LoginResponse() {}
+    public LoginResponse() {
+    }
 
     // ===== GETTERS =====
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getPhoneNumber() { return phoneNumber; }
-    public String getAddress() { return address; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 
     // ===== SETTERS =====
-    public void setId(Long id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setEmail(String email) { this.email = email; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    public void setAddress(String address) { this.address = address; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
 ```
 
@@ -598,7 +655,6 @@ public class LoginResponse {
 package com.example.expensebackend.dto.Response;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * DTO trả về tổng quan tài chính của user.
@@ -614,7 +670,7 @@ public class SummaryResponse {
 
     // ===== CONSTRUCTOR =====
     public SummaryResponse(BigDecimal totalIncome, BigDecimal totalExpense,
-                          BigDecimal balance, Integer transactionCount) {
+                           BigDecimal balance, Integer transactionCount) {
         this.totalIncome = totalIncome;
         this.totalExpense = totalExpense;
         this.balance = balance;
@@ -622,16 +678,38 @@ public class SummaryResponse {
     }
 
     // ===== GETTERS =====
-    public BigDecimal getTotalIncome() { return totalIncome; }
-    public BigDecimal getTotalExpense() { return totalExpense; }
-    public BigDecimal getBalance() { return balance; }
-    public Integer getTransactionCount() { return transactionCount; }
+    public BigDecimal getTotalIncome() {
+        return totalIncome;
+    }
+
+    public BigDecimal getTotalExpense() {
+        return totalExpense;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public Integer getTransactionCount() {
+        return transactionCount;
+    }
 
     // ===== SETTERS =====
-    public void setTotalIncome(BigDecimal totalIncome) { this.totalIncome = totalIncome; }
-    public void setTotalExpense(BigDecimal totalExpense) { this.totalExpense = totalExpense; }
-    public void setBalance(BigDecimal balance) { this.balance = balance; }
-    public void setTransactionCount(Integer transactionCount) { this.transactionCount = transactionCount; }
+    public void setTotalIncome(BigDecimal totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public void setTotalExpense(BigDecimal totalExpense) {
+        this.totalExpense = totalExpense;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void setTransactionCount(Integer transactionCount) {
+        this.transactionCount = transactionCount;
+    }
 }
 ```
 
@@ -719,8 +797,8 @@ public class EntityController {
     @GetMapping("/{id}")
     public ResponseEntity<ResponseDTO> getById(@PathVariable Long id) {
         return service.getById(id)
-            .map(ResponseEntity::ok)                    // Tìm thấy → 200
-            .orElseGet(() -> ResponseEntity.notFound().build());  // Không thấy → 404
+                .map(ResponseEntity::ok)                    // Tìm thấy → 200
+                .orElseGet(() -> ResponseEntity.notFound().build());  // Không thấy → 404
     }
 
     // PUT /api/ten/{id} - Cập nhật
@@ -824,7 +902,6 @@ public List<Entity> getAll() {
 ```java
 package com.example.expensebackend.Controller;
 
-import com.example.expensebackend.Entity.Transaction;
 import com.example.expensebackend.Service.TransactionService;
 import com.example.expensebackend.dto.Request.TransactionRequest;
 import com.example.expensebackend.dto.Response.TransactionResponse;
@@ -854,7 +931,7 @@ public class TransactionController {
 
         try {
             TransactionResponse response = transactionService
-                .createTransaction(email, categoryId, request);
+                    .createTransaction(email, categoryId, request);
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
@@ -873,8 +950,8 @@ public class TransactionController {
     @GetMapping("/{id}")
     public ResponseEntity<TransactionResponse> getById(@PathVariable Long id) {
         return transactionService.getById(id)
-            .map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Cập nhật giao dịch
@@ -1293,6 +1370,7 @@ public class SavingGoal {
 package com.example.expensebackend.dto.Request;
 
 import jakarta.validation.constraints.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -1316,18 +1394,46 @@ public class SavingGoalRequest {
     private String status;
 
     // ===== GETTERS =====
-    public String getGoalName() { return goalName; }
-    public BigDecimal getTargetAmount() { return targetAmount; }
-    public BigDecimal getCurrentAmount() { return currentAmount; }
-    public LocalDate getDeadline() { return deadline; }
-    public String getStatus() { return status; }
+    public String getGoalName() {
+        return goalName;
+    }
+
+    public BigDecimal getTargetAmount() {
+        return targetAmount;
+    }
+
+    public BigDecimal getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 
     // ===== SETTERS =====
-    public void setGoalName(String goalName) { this.goalName = goalName; }
-    public void setTargetAmount(BigDecimal targetAmount) { this.targetAmount = targetAmount; }
-    public void setCurrentAmount(BigDecimal currentAmount) { this.currentAmount = currentAmount; }
-    public void setDeadline(LocalDate deadline) { this.deadline = deadline; }
-    public void setStatus(String status) { this.status = status; }
+    public void setGoalName(String goalName) {
+        this.goalName = goalName;
+    }
+
+    public void setTargetAmount(BigDecimal targetAmount) {
+        this.targetAmount = targetAmount;
+    }
+
+    public void setCurrentAmount(BigDecimal currentAmount) {
+        this.currentAmount = currentAmount;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
 ```
 
@@ -1351,7 +1457,8 @@ public class SavingGoalResponse {
     private Long userId;
 
     // ===== CONSTRUCTOR =====
-    public SavingGoalResponse() {}
+    public SavingGoalResponse() {
+    }
 
     public SavingGoalResponse(Long id, String goalName, BigDecimal targetAmount,
                               BigDecimal currentAmount, LocalDate deadline,
@@ -1367,24 +1474,70 @@ public class SavingGoalResponse {
     }
 
     // ===== GETTERS =====
-    public Long getId() { return id; }
-    public String getGoalName() { return goalName; }
-    public BigDecimal getTargetAmount() { return targetAmount; }
-    public BigDecimal getCurrentAmount() { return currentAmount; }
-    public LocalDate getDeadline() { return deadline; }
-    public String getStatus() { return status; }
-    public Double getProgressPercentage() { return progressPercentage; }
-    public Long getUserId() { return userId; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getGoalName() {
+        return goalName;
+    }
+
+    public BigDecimal getTargetAmount() {
+        return targetAmount;
+    }
+
+    public BigDecimal getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Double getProgressPercentage() {
+        return progressPercentage;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
 
     // ===== SETTERS =====
-    public void setId(Long id) { this.id = id; }
-    public void setGoalName(String goalName) { this.goalName = goalName; }
-    public void setTargetAmount(BigDecimal targetAmount) { this.targetAmount = targetAmount; }
-    public void setCurrentAmount(BigDecimal currentAmount) { this.currentAmount = currentAmount; }
-    public void setDeadline(LocalDate deadline) { this.deadline = deadline; }
-    public void setStatus(String status) { this.status = status; }
-    public void setProgressPercentage(Double progressPercentage) { this.progressPercentage = progressPercentage; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setGoalName(String goalName) {
+        this.goalName = goalName;
+    }
+
+    public void setTargetAmount(BigDecimal targetAmount) {
+        this.targetAmount = targetAmount;
+    }
+
+    public void setCurrentAmount(BigDecimal currentAmount) {
+        this.currentAmount = currentAmount;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setProgressPercentage(Double progressPercentage) {
+        this.progressPercentage = progressPercentage;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }
 ```
 

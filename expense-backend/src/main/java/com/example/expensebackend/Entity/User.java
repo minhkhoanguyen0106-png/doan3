@@ -22,6 +22,12 @@ public class User {
     @Column(unique = true) // Email khong duoc trung trong bang users.
     private String email; // Email dung de dang nhap va tim user.
 
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role; // Vai tro nguoi dung (USER, ADMIN)
+
+    private String status = "ACTIVE"; // Trang thai nguoi dung (ACTIVE, LOCKED)
+
     public void setName(String name) { this.name = name; } // Setter cap nhat ten.
 
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; } // Setter cap nhat so dien thoai.
@@ -34,6 +40,10 @@ public class User {
 
     public void setPassword(String password) { this.password = password; } // Setter cap nhat password da ma hoa.
 
+    public void setRole(Role role) { this.role = role; } // Setter cap nhat role.
+
+    public void setStatus(String status) { this.status = status; } // Setter cap nhat status.
+
     public Long getId() { return id; } // Getter lay id.
 
     public String getName() { return name; } // Getter lay ten.
@@ -45,4 +55,8 @@ public class User {
     public String getAddress() { return address; } // Getter lay dia chi.
 
     public String getEmail() { return email; } // Getter lay email.
+
+    public Role getRole() { return role; } // Getter lay role.
+
+    public String getStatus() { return status; } // Getter lay status.
 }

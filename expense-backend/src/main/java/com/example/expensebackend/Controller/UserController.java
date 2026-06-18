@@ -7,6 +7,7 @@ import com.example.expensebackend.dto.Response.RegisterResponse;
 import com.example.expensebackend.dto.Request.ChangePasswordRequest;
 import com.example.expensebackend.dto.Request.LoginRequest;
 import com.example.expensebackend.dto.Request.RegisterRequest;
+import com.example.expensebackend.dto.Response.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,14 +43,14 @@ public class UserController {
     }
 
     @GetMapping // API lay tat ca user: GET /api/users.
-    public List<User> getAllUsers() {
+    public List<UserResponse> getAllUsers() {
         return userService.getAllUsers(); // Goi service lay danh sach user tu database.
     }
 
-    @GetMapping("/{id}") // API lay user theo id: GET /api/users/{id}.
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    @GetMapping("/{email}") // API lay user theo email: GET /api/users/{email}.
+    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) {
         // @PathVariable lay id tren URL va gan vao bien id.
-        return userService.getUserById(id)
+        return userService.getUserByEmail(email)
                 // Neu tim thay user thi tra HTTP 200 kem user.
                 .map(ResponseEntity::ok)
                 // Neu khong tim thay user thi tra HTTP 404 Not Found.

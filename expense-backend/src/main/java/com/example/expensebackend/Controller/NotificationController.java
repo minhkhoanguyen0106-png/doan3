@@ -1,6 +1,5 @@
 package com.example.expensebackend.Controller;
 
-import com.example.expensebackend.Entity.Notification;
 import com.example.expensebackend.Service.NotificationService;
 import com.example.expensebackend.dto.Request.NotificationRequest;
 import com.example.expensebackend.dto.Response.NotificationResponse;

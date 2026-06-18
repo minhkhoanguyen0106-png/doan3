@@ -1,6 +1,5 @@
 package com.example.expensebackend.Controller;
 
-import com.example.expensebackend.Entity.AiHistory;
 import com.example.expensebackend.Service.AiHistoryService;
 import com.example.expensebackend.dto.Request.AiHistoryRequest;
 import com.example.expensebackend.dto.Response.AiHistoryResponse;

@@ -14,8 +14,16 @@ public class LoginResponse { // DTO tra ve sau khi login thanh cong.
         this.address = address; // Gan address vao response.
     }
 
+    // Empty constructor cho Jackson deserialize
+    public LoginResponse() {}
+
     public String getName() { return name; } // Getter de Jackson chuyen name sang JSON.
     public String getEmail() { return email; } // Getter de Jackson chuyen email sang JSON.
     public String getPhoneNumber() { return phoneNumber; } // Getter de Jackson chuyen phoneNumber sang JSON.
     public String getAddress() { return address; } // Getter de Jackson chuyen address sang JSON.
+
+    public void setName(String name) { this.name = name; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public void setAddress(String address) { this.address = address; }
 }

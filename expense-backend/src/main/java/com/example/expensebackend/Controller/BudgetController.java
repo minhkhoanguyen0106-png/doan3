@@ -1,6 +1,5 @@
 package com.example.expensebackend.Controller;
 
-import com.example.expensebackend.Entity.Budget;
 import com.example.expensebackend.Service.BudgetService;
 import com.example.expensebackend.dto.Request.BudgetRequest;
 import com.example.expensebackend.dto.Response.BudgetResponse;
